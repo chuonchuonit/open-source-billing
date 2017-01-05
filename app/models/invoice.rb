@@ -262,8 +262,8 @@ class Invoice < ActiveRecord::Base
   end
 
   def convert_vnd_to_usd(amount)
-    if self.currency_id == 150:
-      return amount/23000
+    if self.currency_id == 150
+      return amount/22300
     else
       return amount
     end

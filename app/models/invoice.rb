@@ -261,6 +261,14 @@ class Invoice < ActiveRecord::Base
      OSB::CONFIG::PAYPAL_BUSINESS
   end
 
+  def convert_vnd_to_usd(amount)
+    if self.currency_id == 150:
+      return amount/23000
+    else
+      return amount
+    end
+  end
+
   def paypal_url(return_url, notify_url, user = nil)
     values = {
         :business => paypal_business(user),
@@ -270,7 +278,7 @@ class Invoice < ActiveRecord::Base
         :notify_url => notify_url,
         :invoice => id,
         :item_name => "Invoice",
-        :amount => unpaid_amount
+        :amount => convert_vnd_to_usd(unpaid_amount)
     }
     fetch_paypal_url(user) + values.to_query
   end
